@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ProfileMenu from "../ProfileMenu/ProfileMenu";
 
 export function Nav() {
   return (
@@ -9,7 +10,7 @@ export function Nav() {
             Stop ✋ Complete ✅
           </Link>
           <div className="flex items-center lg:gap-1 gap-2">
-            {/* <ProfileMenu /> */}
+            <ProfileMenu />
           </div>
         </div>
       </div>

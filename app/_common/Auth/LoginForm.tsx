@@ -9,6 +9,23 @@ type Inputs = {
   email: string;
   password: string;
 };
+
+type errors = {
+  msg: string
+}
+
+
+class CustomError extends Error {
+  code?: number;
+  msg?: number;
+
+  constructor(msg: string, code?: number) {
+    super(msg);
+    this.name = "CustomError";
+    this.code = code;
+  }
+}
+
 const LoginForm = () => {
   const router = useRouter();
   const [isSubmit, setIsSubmit] = useState(false);
@@ -43,7 +60,7 @@ const LoginForm = () => {
       }
       if (resp.data.code == 400) {
         if (Array.isArray(resp.data.errros)) {
-          resp.data.errros.map((error: any) => {
+          resp.data.errros.map((error:errors) => {
             showToast(error.msg, "red");
           });
         }

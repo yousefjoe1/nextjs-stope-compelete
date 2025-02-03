@@ -14,18 +14,6 @@ type errors = {
   msg: string
 }
 
-
-class CustomError extends Error {
-  code?: number;
-  msg?: number;
-
-  constructor(msg: string, code?: number) {
-    super(msg);
-    this.name = "CustomError";
-    this.code = code;
-  }
-}
-
 const LoginForm = () => {
   const router = useRouter();
   const [isSubmit, setIsSubmit] = useState(false);

@@ -1,5 +1,5 @@
 "use client";
-import { LogIn, LogOut, User } from "lucide-react";
+import { LogIn, User } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import {

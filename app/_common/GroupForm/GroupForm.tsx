@@ -29,14 +29,14 @@ const GroupForm = () => {
       return;
     }
 
-    let userdata = {
+    const userdata = {
       name: data.name,
       groupType: groupType.current || "",
     };
     setIsSubmit(true);
 
     try {
-      let resp = await addGroup(userdata);
+      const resp = await addGroup(userdata);
 
       if (resp.code == 201) {
         showToast(`${resp.msg} -- تم الاضافة `);
@@ -46,8 +46,8 @@ const GroupForm = () => {
       }
 
       groupType.current = "";
-    } catch (error) {
-      //   msg("error", `انت لست مسجل عندنا او هناك خطا اخر`);
+    } catch (error:any) {
+      showToast(`${error.msg} انت لست مسجل عندنا او هناك خطا اخر`);
     }
     setIsSubmit(false);
   };

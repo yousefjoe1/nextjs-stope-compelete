@@ -1,12 +1,13 @@
 import { getData } from "@/actions/getGroups";
 import React from "react";
 import GroupCard from "./GroupCard";
+import { Group } from "@/types/types";
 
 const GroupCards = async () => {
   const data = await getData("groups");
   return (
     <>
-      {data?.data?.map((group: any) => (
+      {data?.data?.map((group: Group) => (
         <GroupCard group={group} key={group._id} />
       ))}
     </>

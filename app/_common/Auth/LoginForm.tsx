@@ -35,8 +35,7 @@ const LoginForm = () => {
     setIsSubmit(true);
 
     try {
-      let resp = await loginAction(userdata);
-      console.log(resp, "login data");
+      const resp = await loginAction(userdata);
       if (resp.code == 400) {
         showToast(resp.msg, "red");
         setIsSubmit(false);

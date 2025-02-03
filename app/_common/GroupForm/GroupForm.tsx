@@ -1,18 +1,16 @@
 "use client";
 import { addGroup } from "@/actions/addGroup";
-// import { Toaster } from "@/components/ui/sonner";
 import { GroupInputs } from "@/types/types";
 import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-
 
 const GroupForm = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const showToast = (msg: string, color: string = "", time: number = 5000) => {
     toast(msg, {
       duration: time,
-    //   unstyled: true,
+      //   unstyled: true,
       className: `border-t-4 border-${color}-500 rounded-b text-${color}-900 px-4 py-3 shadow-md`,
     });
   };
@@ -26,8 +24,6 @@ const GroupForm = () => {
   const groupType = useRef<string | undefined>("");
 
   const onSubmit: SubmitHandler<GroupInputs> = async (data) => {
-
-
     if (groupType.current == "") {
       showToast(`اختر نوع اولا`);
       return;
@@ -42,13 +38,13 @@ const GroupForm = () => {
     try {
       let resp = await addGroup(userdata);
 
-      if (resp.data.code == 400 || resp.data.code != 201) {
-        showToast(`${resp.data.msg} او هناك خطا اخر -- انت لست مسجل عندنا`);
+      if (resp.code == 201) {
+        showToast(`${resp.msg} -- تم الاضافة `);
       }
-      if (resp.data.code == 201) {
-        showToast(`${resp.data.msg} -- تم الاضافة `);
-        // refetch();
+      if (resp.code == 400 || resp.code != 201) {
+        showToast(`${resp.msg} او هناك خطا اخر -- انت لست مسجل عندنا`);
       }
+
       groupType.current = "";
     } catch (error) {
       //   msg("error", `انت لست مسجل عندنا او هناك خطا اخر`);
@@ -58,8 +54,6 @@ const GroupForm = () => {
 
   return (
     <>
-      {/* <Toaster closeButton position="bottom-center" /> */}
-
       <div
         dir="rtl"
         aos-duration="1000"

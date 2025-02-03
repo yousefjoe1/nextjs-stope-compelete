@@ -6,13 +6,13 @@ const GroupCards = async () => {
     const data = await getData('groups')
     console.log("🚀 ~ GroupCards ~ data:", data)
   return (
-    <div>
+    <>
 
         {data?.data?.map((group:any) => (
             <GroupCard group={group} key={group._id} />
         ))}
         
-    </div>
+    </>
   )
 }
 

@@ -8,7 +8,8 @@ const GroupCard = ({ group}: { group: Group}) => {
       : `general?g=${group._id}`;
 
   return (
-    <div className="flex bg-white-100 justify-between p-3 rounded-xl items-center shadow-md gap-4 flex-wrap">
+    <div         data-aos="fade-up"
+    data-aos-duration="1000" className="flex bg-white-100 justify-between p-3 rounded-xl items-center shadow-md gap-4 flex-wrap">
       <div className="info">
         <h3 className="lg:text-2xl"> الاسم: {group.name} </h3>
         <h3 className="lg:text-2xl"> النوع: {group.groupType} </h3>

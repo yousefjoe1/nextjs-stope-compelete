@@ -8,7 +8,7 @@ import { cookies } from 'next/headers';
 export async function addGroup(data:GroupInputs) {
   const url = process.env.NEXT_PUBLIC_DB
 
-  let tk = (await cookies()).get('playerToken')
+  let tk = (await cookies()).get('playerToken')?.value
   let h = {
     headers: {
       Authorization: `Bearer ${tk}`,

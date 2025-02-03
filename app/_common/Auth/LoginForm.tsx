@@ -27,7 +27,7 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    let userdata = {
+    const userdata = {
       email: data.email,
       password: data.password,
     };

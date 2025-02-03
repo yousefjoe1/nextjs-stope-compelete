@@ -5,6 +5,19 @@ import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+
+class CustomError extends Error {
+  code?: number;
+  msg?: number;
+
+  constructor(msg: string, code?: number) {
+    super(msg);
+    this.name = "CustomError";
+    this.code = code;
+  }
+}
+
+
 const GroupForm = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const showToast = (msg: string, color: string = "", time: number = 5000) => {
@@ -46,8 +59,13 @@ const GroupForm = () => {
       }
 
       groupType.current = "";
-    } catch (error:any) {
-      showToast(`${error.msg} انت لست مسجل عندنا او هناك خطا اخر`);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        showToast(`${error.msg} انت لست مسجل عندنا او هناك خطا اخر`);
+      } else {
+        showToast(`Unexpected error occurred.`);
+      }
+      showToast(`انت لست مسجل عندنا او هناك خطا اخر`);
     }
     setIsSubmit(false);
   };

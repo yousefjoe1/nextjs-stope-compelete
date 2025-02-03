@@ -31,6 +31,7 @@ const GroupForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<GroupInputs>();
 
@@ -53,6 +54,7 @@ const GroupForm = () => {
 
       if (resp.code == 201) {
         showToast(`${resp.msg} -- تم الاضافة `);
+        reset()
       }
       if (resp.code == 400 || resp.code != 201) {
         showToast(`${resp.msg} او هناك خطا اخر -- انت لست مسجل عندنا`);
@@ -77,7 +79,11 @@ const GroupForm = () => {
         aos-duration="1000"
         className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl mx-auto shadow-2xl"
       >
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+      {
+        isSubmit ?
+        <div className="loader"></div>:
+
+        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="group-name" className="sr-only">
               اسم مجموعه اللعب
@@ -100,9 +106,9 @@ const GroupForm = () => {
             )}
           </div>
           <div className="type-select">
-            <h2>اختر النوع</h2>
+            <label htmlFor="group-type">اختر النوع</label>
             <div className="select mt-2">
-              <select onChange={(e) => (groupType.current = e.target.value)}>
+              <select title="اختر النوع" name="group-type" onChange={(e) => (groupType.current = e.target.value)}>
                 <option value=""></option>
                 <option value="دينية">دينية</option>
                 <option value="عامة">ثقافة عامة</option>
@@ -111,6 +117,7 @@ const GroupForm = () => {
           </div>
           <div>
             <button
+            title="إضافة"
               type="submit"
               disabled={isSubmit}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-300 ease-in-out"
@@ -119,6 +126,7 @@ const GroupForm = () => {
             </button>
           </div>
         </form>
+      }
       </div>
     </>
   );

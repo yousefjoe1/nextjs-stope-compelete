@@ -5,8 +5,8 @@ import DeleteGroup from "../Group/DeleteGroup";
 const GroupCard = ({ group }: { group: Group }) => {
   const linkBasedOnType =
     group.groupType == "دينية"
-      ? `religin?g=${group._id}`
-      : `general?g=${group._id}`;
+      ? `group?t=religin&g=${group._id}`
+      : `group?t=general&g=${group._id}`;
 
   return (
     <div

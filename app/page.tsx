@@ -5,7 +5,7 @@ import GroupCards from "./_common/GroupCards/GroupCards";
 
 export default function Home() {
   return (
-    <div dir="rtl" className="py-20 container mx-auto px-4">
+    <div dir="rtl" className="py-20 container mx-auto px-4 ">
       <Toaster closeButton position="bottom-center" />
       <Aos />
       <h1 className="lg:text-3xl font-bold lg:my-10 mb-4 text-center">

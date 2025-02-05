@@ -27,7 +27,7 @@ const ProfileMenu = () => {
   useEffect(() => {
     const checkToken = async () => {
       const token = await isTokenExist()
-      if (token) {
+      if (token.bool) {
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);

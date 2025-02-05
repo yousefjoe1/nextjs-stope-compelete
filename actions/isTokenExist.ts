@@ -4,11 +4,11 @@ import { cookies } from 'next/headers';
 
 export async function isTokenExist() {
 
-    let token = (await cookies()).get('playerToken')
+    let token = (await cookies()).get('playerToken')?.value
 
     if(token){
-        return true
+        return {bool: true,tok: token}
     }else{
-        return false
+        return {bool: false,tok: ''}
     }
 }

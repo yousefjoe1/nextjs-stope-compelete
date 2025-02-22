@@ -11,16 +11,16 @@ import {
 import Link from "next/link";
 import { isTokenExist } from "@/actions/isTokenExist";
 import { logout } from "@/actions/logout";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 
 const ProfileMenu = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const router = useRouter()
+  // const router = useRouter()
 
   const handleLogout = () => {
     logout()
-    router.push('/login')
+    // router.push('/login')
     window.location.reload()
   };
 

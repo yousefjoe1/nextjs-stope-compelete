@@ -1,10 +1,13 @@
 "use client";
 import { loginAction } from "@/actions/loginAcation";
 import { toast } from "sonner";
-import React, { useState } from "react";
+import React, { useEffect,  useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Toaster } from "@/components/ui/sonner";
-import { useRouter } from "next/navigation";
+import { isTokenExist } from "@/actions/isTokenExist";
+import Link from "next/link";
+
+// import { useRouter } from "next/navigation";
 type Inputs = {
   email: string;
   password: string;
@@ -15,7 +18,7 @@ type errors = {
 }
 
 const LoginForm = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const [isSubmit, setIsSubmit] = useState(false);
 
   const showToast = (msg: string, color: string, time: number = 5000) => {
@@ -25,6 +28,21 @@ const LoginForm = () => {
       className: `border-t-4 border-${color}-500 rounded-b text-${color}-900 px-4 py-3 shadow-md`,
     });
   };
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // const effectRan = useRef(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = await isTokenExist();
+      if (token.bool) {
+        setIsAuthenticated(true);
+      }
+    };
+    
+    checkAuth();
+  }, []);
 
   const {
     register,
@@ -54,8 +72,13 @@ const LoginForm = () => {
         }
       } else {
         showToast(resp.msg, "red");
-        window.location.reload();
-        router.push("/");
+        
+        // showToast(`يتم توجيهك الى الصفحه الرئيسية`, "green");
+        
+        setTimeout(() => {
+          window.location.reload();
+          // router.push("/");
+        }, 2000);
       }
     } catch (er) {
       console.log("🚀 ~ constonSubmit:SubmitHandler<Inputs>= ~ er:", er);
@@ -63,6 +86,10 @@ const LoginForm = () => {
 
     setIsSubmit(false);
   };
+
+
+  
+
   return (
     <div>
       <Toaster closeButton position="bottom-center" />
@@ -102,7 +129,7 @@ const LoginForm = () => {
           )}
         </div>
 
-        <>
+        <div className="flex gap-3 items-center">
           <button
             type="submit"
             disabled={isSubmit}
@@ -110,7 +137,15 @@ const LoginForm = () => {
           >
             {isSubmit ? <div className="loader"></div> : <span>دخول</span>}
           </button>
-        </>
+          {isAuthenticated && (
+        <Link
+          href="/"
+          className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition duration-300 ease-in-out"
+        >
+          الذهاب للرئيسية
+        </Link>
+      )}
+        </div>
       </form>
     </div>
   );

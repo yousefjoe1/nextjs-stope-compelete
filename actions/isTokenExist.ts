@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 
 export async function isTokenExist() {
 
-    let token = (await cookies()).get('playerToken')?.value
+    const token = (await cookies()).get('playerToken')?.value
 
     if(token){
         return {bool: true,tok: token}

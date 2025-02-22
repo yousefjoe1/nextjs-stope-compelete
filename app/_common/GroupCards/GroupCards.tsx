@@ -5,6 +5,7 @@ import { Group } from "@/types/types";
 
 const GroupCards = async () => {
   const data = await getData("groups");
+  console.log("🚀 ~ GroupCards ~ data:", data)
   return (
     <>
       {data?.data?.map((group: Group) => (

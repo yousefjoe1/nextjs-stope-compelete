@@ -1,11 +1,16 @@
 import React from 'react'
-import PlayersChat from './PlayersChat'
+import ReliginForm from '../ReligenQuestions/components/ReliginForm'
 
 const Religin = ({group}:{group: string}) => {
   return (
-    <div>
-      <PlayersChat groupId={group} />
-    </div>
+    <section>
+
+      <ReliginForm grRef={group} />
+        <div className="overflow-x-auto">
+          <h5>جدول الاجابات</h5>
+          {/* <AnswersTable data={serverResponse} /> */}
+        </div>
+    </section>
   )
 }
 

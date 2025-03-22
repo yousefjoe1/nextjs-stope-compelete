@@ -70,7 +70,7 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
       socket.off("get_msg");
       socket.off("joined");
     };
-  }, [socket]);
+  }, []);
 
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
     };
 
     messages();
-  }, [socket]);
+  }, []);
 
   const sendMessage = async () => {
     const token = await isTokenExist();

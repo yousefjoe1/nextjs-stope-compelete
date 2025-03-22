@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 
 export async function logout() {
 
-    let token = (await cookies()).delete('playerToken')
+   (await cookies()).delete('playerToken')
     revalidatePath('/login')
     revalidatePath('/')
 }

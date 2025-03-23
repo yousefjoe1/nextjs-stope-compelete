@@ -1,6 +1,5 @@
 "use client";
 import { SubmitHandler, useForm } from "react-hook-form";
-// import { Answers } from "../../../types/d";
 import { motion } from "framer-motion";
 
 import { useRef, useState } from "react";
@@ -13,19 +12,12 @@ import {
 } from "@/app/_constants/GameData";
 import { isTokenExist } from "@/actions/isTokenExist";
 import { addAnswer } from "@/actions/addAnswer";
-// import { useNavigate } from "react-router-dom";
 
 const ReliginForm = ({ grRef }: { grRef: string | null }) => {
-  console.log("🚀 ~ ReliginForm ~ grRef:", grRef);
-  // const navigat = useNavigate()
 
-  //   const [messageApi, contextHolder] = message.useMessage();
   const showToast = (msg: string, time: number = 5000) => {
     toast(msg, {
       duration: time,
-      //   unstyled: true,
-
-      // className: `border-t-4 border-${color}-500 rounded-b text-${color}-900 px-4 py-3 shadow-md`,
     });
   };
   const [isSubmit, setIsSubmit] = useState(false);
@@ -41,9 +33,6 @@ const ReliginForm = ({ grRef }: { grRef: string | null }) => {
     const token = await isTokenExist();
     if (token.bool != true) {
       showToast("سجل معانا او ادخل بحسابك لو عندك");
-      setTimeout(() => {
-        // navigat('/auth')
-      }, 1900);
       return;
     }
     if (character.current == undefined || character.current == "") {
@@ -56,31 +45,25 @@ const ReliginForm = ({ grRef }: { grRef: string | null }) => {
       group: grRef,
       answer_type: "religin",
     };
-    // const d = { answers: answers };
+    setIsSubmit(true);
 
     try {
       const resp = await addAnswer(answers);
-      console.log("🚀 ~ constonSubmit:SubmitHandler<Answers>= ~ resp:", resp)
 
       if (resp.code == 201) {
         showToast(`${resp.msg} -- تم الاضافة `);
         reset();
       }
-      // if (resp.code == 400 || resp.code != 201) {
-      //   showToast(`${resp.msg} او هناك خطا اخر -- انت لست مسجل عندنا`);
-      // }
+      if (resp.code == 400 || resp.code != 201) {
+        showToast(`${resp.msg} او هناك خطا اخر -- انت لست مسجل عندنا`);
+      }
     } catch (error) {
       console.log("🚀 ~ constonSubmit:SubmitHandler<Answers>= ~ error:", error);
-      // if (error instanceof CustomError) {
-      //   showToast(`${error.msg} انت لست مسجل عندنا او هناك خطا اخر`);
-      // } else {
-      //   showToast(`Unexpected error occurred.`);
-      // }
-      // showToast(`انت لست مسجل عندنا او هناك خطا اخر`);
+      showToast(`Unexpected error occurred.`);
+
     }
-    // character.current = "";
+    character.current = "";
     setIsSubmit(false);
-    // reset();
   };
 
   const onCharacterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -149,7 +132,7 @@ const ReliginForm = ({ grRef }: { grRef: string | null }) => {
         )}
         <motion.button
           type="submit"
-          // disabled={isSubmit}
+          disabled={isSubmit}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-300 ease-in-out"

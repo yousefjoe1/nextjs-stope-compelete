@@ -4,8 +4,8 @@ import Religin from '../_common/Group/Religin'
 import PlayersChat from '../_common/Group/PlayersChat'
 import { Button } from '@/components/ui/button'
 
-const page = async ({ searchParams }: { searchParams: { t?: string,g: string } }) => {
-  const params = await searchParams;
+const page = async ({ searchParams }: { searchParams: Promise<{ t?: string, g: string }> }) => {
+  const params = await searchParams; // Await the Promise
   const type = params.t;
   const id = params.g;
 

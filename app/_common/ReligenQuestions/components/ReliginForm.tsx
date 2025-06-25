@@ -2,7 +2,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Answers } from "@/types/types";
 import {
@@ -12,8 +12,14 @@ import {
 } from "@/app/_constants/GameData";
 import { isTokenExist } from "@/actions/isTokenExist";
 import { addAnswer } from "@/actions/addAnswer";
+import { Toaster } from "@/components/ui/sonner";
 
-const ReliginForm = ({ grRef }: { grRef: string | null }) => {
+interface ReliginFormProps {
+  grRef: string | null;
+  refetchFunction: () => void; // or () => Promise<void> if async
+}
+
+const ReliginForm = ({ grRef, refetchFunction }: ReliginFormProps) => {
 
   const showToast = (msg: string, time: number = 5000) => {
     toast(msg, {
@@ -21,7 +27,7 @@ const ReliginForm = ({ grRef }: { grRef: string | null }) => {
     });
   };
   const [isSubmit, setIsSubmit] = useState(false);
-  const character = useRef<string | undefined>(undefined);
+  const [character, setCharacter] = useState('');
   const {
     register,
     handleSubmit,
@@ -31,27 +37,28 @@ const ReliginForm = ({ grRef }: { grRef: string | null }) => {
 
   const onSubmit: SubmitHandler<Answers> = async (data) => {
     const token = await isTokenExist();
-    if (token.bool != true) {
+    if (token.bool == false) {
       showToast("سجل معانا او ادخل بحسابك لو عندك");
       return;
     }
-    if (character.current == undefined || character.current == "") {
+    if (character == '') {
       showToast(`اختر حرف اولا`);
       return;
     }
-    const answers = {
-      ...data,
-      character: character.current,
-      group: grRef,
-      answer_type: "religin",
-    };
+
     setIsSubmit(true);
 
     try {
-      const resp = await addAnswer(answers);
+      const resp = await addAnswer({
+        ...data,
+        character: character,
+        group: grRef,
+        answer_type: "religin",
+      });
 
       if (resp.code == 201) {
         showToast(`${resp.msg} -- تم الاضافة `);
+        refetchFunction()
         reset();
       }
       if (resp.code == 400 || resp.code != 201) {
@@ -60,23 +67,24 @@ const ReliginForm = ({ grRef }: { grRef: string | null }) => {
     } catch (error) {
       console.log("🚀 ~ constonSubmit:SubmitHandler<Answers>= ~ error:", error);
       showToast(`Unexpected error occurred.`);
-
     }
-    character.current = "";
+    setCharacter('')
     setIsSubmit(false);
   };
 
   const onCharacterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    character.current = event.target.value;
+    setCharacter(event.target.value);
   };
 
   return (
+    
     <>
+    <Toaster closeButton position="bottom-center" />
       <form className="mt-8 space-y-2" onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="الحروف">الحروف</label>
+        <label htmlFor="الحروف">الحروف : </label>
         <select
           id="الحروف"
-          className="w-[120px] p-1 rounded-xl px-2 text-black "
+          className="w-[120px] p-1 rounded-xl px-2 mx-2 text-black "
           onChange={onCharacterChange}
         >
           <option value={""}>اختر حرف</option>

@@ -9,6 +9,7 @@ export async function addGroup(data:GroupInputs) {
   const url = process.env.NEXT_PUBLIC_DB
 
   const tk = (await cookies()).get('playerToken')?.value
+  console.log("🚀 ~ addGroup ~ tk:", tk)
   const h = {
     headers: {
       Authorization: `Bearer ${tk}`,

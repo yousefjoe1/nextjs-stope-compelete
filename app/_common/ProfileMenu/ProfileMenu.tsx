@@ -1,5 +1,5 @@
 "use client";
-import { LogIn, User } from "lucide-react";
+import { Loader, LogIn, User } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import {
@@ -16,12 +16,17 @@ import { logout } from "@/actions/logout";
 
 const ProfileMenu = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   // const router = useRouter()
 
   const handleLogout = () => {
     logout()
     // router.push('/login')
-    window.location.reload()
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      window.location.reload()
+    }, 2000);
   };
 
   useEffect(() => {
@@ -50,8 +55,9 @@ const ProfileMenu = () => {
 
         <DropdownMenuContent>
           <DropdownMenuItem className="w-full">
+            {isLoading && <Loader />}
             {isLoggedIn ? (
-              <button onClick={handleLogout} className="flex w-full justify-between">
+              <button onClick={handleLogout} disabled={isLoading} className="flex w-full justify-between">
                 <LogIn className="lg:h-6 lg:w-6 w-6 h-6 text-gray-600" /> خروج
               </button>
             ) : (

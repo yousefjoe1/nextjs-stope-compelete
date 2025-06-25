@@ -20,7 +20,7 @@ export type Inputs = {
   
   export interface Answers  {
     _id: string;
-    character:string;
+    character:string | undefined;
     prophet: string;
     companionMale: string;
     companionFemale: string;
@@ -28,4 +28,6 @@ export type Inputs = {
     ayah: string;
     ghazwa: string;
     playerName: string;
+    group: string | null;
+    answer_type: string;
   };

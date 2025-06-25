@@ -1,19 +1,16 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import ReliginForm from '../ReligenQuestions/components/ReliginForm'
 import AnswersTable from '../Tables/ReliginTable'
-import { io } from "socket.io-client";
 import { toast } from 'sonner';
+import { getAnswers } from '@/actions/getAnswers';
 
-const url = process.env.NEXT_PUBLIC_DB;
 
-const socket = io(url, {
-  transports: ["websocket", "polling"],
-  withCredentials: true,
-});
 
 const Religin = ({group}:{group: string}) => {
   const [serverResponse, setServerResponse] = useState([]);
+  const [refetch, setRefetch] = useState(false);
+  console.log("🚀 ~ Religin ~ serverResponse:", serverResponse)
   const showToast = (msg: string, color: string = "", time: number = 5000) => {
     toast(msg, {
       duration: time,
@@ -23,27 +20,23 @@ const Religin = ({group}:{group: string}) => {
 
 
   useEffect(() => {
-    socket.emit("getanswers", group);
-
-    socket.on("getanswers", (allAns) => {
-      setServerResponse(allAns);
-    });
-
-    socket.on("answerSaved", () => {
-      showToast(`اجابة جديده `);
-      socket.emit("getanswers", group);
-    });
-
-    return () => {
-      socket.off("getanswers");
-      socket.off("answerSaved");
-    };
-  }, [group]);
+    const fetchData = async () => {
+      const res = await getAnswers('answers/player-answers')
+      if (res.code == 400 || res.code != 200) {
+        showToast('حدث خطأ أثناء جلب البيانات', 'red');
+        return;
+      }else {
+        setServerResponse(res.data);
+      }
+      
+    }
+    fetchData()
+  }, [group, refetch]);
 
   return (
     <section>
 
-      <ReliginForm grRef={group} />
+      <ReliginForm grRef={group} refetchFunction={()=> setRefetch(!refetch)} />
         <div className="overflow-x-auto">
           <AnswersTable data={serverResponse} />
         </div>

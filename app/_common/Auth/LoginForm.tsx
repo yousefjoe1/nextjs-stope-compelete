@@ -75,10 +75,12 @@ const LoginForm = () => {
         
         // showToast(`يتم توجيهك الى الصفحه الرئيسية`, "green");
         
-        setTimeout(() => {
-          window.location.reload();
-          // router.push("/");
-        }, 2000);
+        window.location.href = "/";
+        // setTimeout(() => {
+        //   // window.location.reload();
+        //   // router.push("/");
+        //   window.location.href = "/";
+        // }, 2000);
       }
     } catch (er) {
       console.log("🚀 ~ constonSubmit:SubmitHandler<Inputs>= ~ er:", er);

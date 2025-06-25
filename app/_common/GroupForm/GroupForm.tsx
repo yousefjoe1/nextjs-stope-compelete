@@ -1,5 +1,6 @@
 "use client";
 import { addGroup } from "@/actions/addGroup";
+import { isTokenExist } from "@/actions/isTokenExist";
 import { GroupInputs } from "@/types/types";
 import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -38,6 +39,14 @@ const GroupForm = () => {
   const groupType = useRef<string | undefined>("");
 
   const onSubmit: SubmitHandler<GroupInputs> = async (data) => {
+
+
+    const tk = await isTokenExist()
+    if(tk.bool == false) {
+      showToast(`انت لست مسجل عندنا او هناك خطا اخر`, "red", 5000);
+      return;
+    }
+
     if (groupType.current == "") {
       showToast(`اختر نوع اولا`);
       return;

@@ -4,14 +4,15 @@ import { cookies } from 'next/headers';
 
 
 
-export async function getAnswers(route:string) {
+export async function getAnswers(route:string, group_id?: string) {
   const url = process.env.NEXT_PUBLIC_DB
   const token = (await cookies()).get('playerToken')?.value
 
   try {
     const response = await axios.get(`${url}/api/${route}`,{
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
+          group_id: group_id
         }
       }); // Replace with your actual endpoint
     // Handle successful response

@@ -10,7 +10,6 @@ import { getAnswers } from '@/actions/getAnswers';
 const Religin = ({group}:{group: string}) => {
   const [serverResponse, setServerResponse] = useState([]);
   const [refetch, setRefetch] = useState(false);
-  console.log("🚀 ~ Religin ~ serverResponse:", serverResponse)
   const showToast = (msg: string, color: string = "", time: number = 5000) => {
     toast(msg, {
       duration: time,
@@ -21,7 +20,7 @@ const Religin = ({group}:{group: string}) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getAnswers('answers/player-answers')
+      const res = await getAnswers('answers/player-answers',group)
       if (res.code == 400 || res.code != 200) {
         showToast('حدث خطأ أثناء جلب البيانات', 'red');
         return;

@@ -59,7 +59,7 @@ const DeleteGroup = ({ group }: { group: string }) => {
               type="button"
               variant="destructive"
               disabled={isSubmit}
-              className={`${isSubmit ? ``:`bg-red-500`} text-white`}
+              className={`${isSubmit ? ``:`bg-red-500 m-2`} text-white`}
               title="مسح"
               onClick={deleteFunc}
             >
@@ -67,7 +67,7 @@ const DeleteGroup = ({ group }: { group: string }) => {
               
             </Button>
             {isSubmit && <div className="delete-loader" />}
-            <DialogClose asChild>
+            <DialogClose asChild className="m-2">
               <Button type="button" variant="secondary">
                 Close
               </Button>

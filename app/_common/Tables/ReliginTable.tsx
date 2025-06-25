@@ -10,7 +10,7 @@ interface Item {
   ghazwa: string; // Ghazwa name
   ayah: string; // Ayah content
 }
-const AnswersTable = ({ data ,admin}: { data: any,admin?: boolean }) => {
+const AnswersTable = ({ data, admin }: { data: Item[], admin?: boolean }) => {
   console.log("🚀 ~ AnswersTable ~ data:", data)
   return (
     <table className="min-w-[99%] mt-10 bg-white border border-gray-300 shadow-md rounded-lg">

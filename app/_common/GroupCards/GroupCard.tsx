@@ -10,8 +10,8 @@ const GroupCard = ({ group }: { group: Group }) => {
 
   return (
     <div
-      data-aos="fade-up"
-      data-aos-duration="1000"
+      // data-aos="fade-up"
+      // data-aos-duration="1000"
       className="flex bg-white-100 justify-between p-3 rounded-xl items-center shadow-md gap-4 flex-wrap"
     >
       <div className="info">
@@ -26,7 +26,7 @@ const GroupCard = ({ group }: { group: Group }) => {
             <span className="button-82-front text">ابدا اللعب</span>
           </button>
         </Link>
-        <DeleteGroup group={group._id}/>
+        <DeleteGroup group={group._id} />
       </div>
     </div>
   );

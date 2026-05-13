@@ -1,7 +1,7 @@
 "use client";
 import { loginAction } from "@/actions/loginAcation";
 import { toast } from "sonner";
-import React, { useEffect,  useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Toaster } from "@/components/ui/sonner";
 import { isTokenExist } from "@/actions/isTokenExist";
@@ -40,7 +40,7 @@ const LoginForm = () => {
         setIsAuthenticated(true);
       }
     };
-    
+
     checkAuth();
   }, []);
 
@@ -59,6 +59,14 @@ const LoginForm = () => {
 
     try {
       const resp = await loginAction(userdata);
+      if (resp.code == 201) {
+        showToast(resp.msg, "green");
+        setIsSubmit(false);
+        window.location.href = '/';
+        // window.location.reload('/');
+
+        return;
+      }
       if (resp.code == 400) {
         showToast(resp.msg, "red");
         setIsSubmit(false);
@@ -66,21 +74,12 @@ const LoginForm = () => {
       }
       if (resp.data.code == 400) {
         if (Array.isArray(resp.data.errros)) {
-          resp.data.errros.map((error:errors) => {
+          resp.data.errros.map((error: errors) => {
             showToast(error.msg, "red");
           });
         }
       } else {
         showToast(resp.msg, "red");
-        
-        // showToast(`يتم توجيهك الى الصفحه الرئيسية`, "green");
-        
-        window.location.href = "/";
-        // setTimeout(() => {
-        //   // window.location.reload();
-        //   // router.push("/");
-        //   window.location.href = "/";
-        // }, 2000);
       }
     } catch (er) {
       console.log("🚀 ~ constonSubmit:SubmitHandler<Inputs>= ~ er:", er);
@@ -90,7 +89,7 @@ const LoginForm = () => {
   };
 
 
-  
+
 
   return (
     <div>
@@ -140,13 +139,13 @@ const LoginForm = () => {
             {isSubmit ? <div className="loader"></div> : <span>دخول</span>}
           </button>
           {isAuthenticated && (
-        <Link
-          href="/"
-          className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition duration-300 ease-in-out"
-        >
-          الذهاب للرئيسية
-        </Link>
-      )}
+            <Link
+              href="/"
+              className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition duration-300 ease-in-out"
+            >
+              الذهاب للرئيسية
+            </Link>
+          )}
         </div>
       </form>
     </div>
